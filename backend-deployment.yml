@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chat-backend
+  template:
+    metadata:
+      labels:
+        app: chat-backend
+    spec:
+      containers:
+      - name: chat-backend
+        image: alluri770/chat-backendd
+        ports:
+        - containerPort: 8080 
+        env:
+        - name: MONGO_URI
+          value: "mongodb://alluri:password@mongo-svc:27017/chat?authSource=admin"
+        - name: JWT_SECRET_KEY
+          value: "djhbfvdshjbeerff"
+        - name: Frontend_Url
+          value: "http://192.168.91.129:30975"  
+        - name: PORT
+          value: "8080"
+      restartPolicy: Always
